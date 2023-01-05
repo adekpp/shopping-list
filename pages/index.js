@@ -2,6 +2,7 @@ import { getSession } from "next-auth/react";
 
 import { useQuery } from "@tanstack/react-query";
 import List from "@/components/List";
+import AddListButton from "@/components/AddListButton";
 
 const getLists = async (data) => {
   try {
@@ -27,11 +28,14 @@ export default function Home(props) {
     enabled: Boolean(user),
   });
   return (
-    <ul className="flex flex-col gap-y-3">
-      {lists?.map((list) => (
-        <List key={list.id} list={list} />
-      ))}
-    </ul>
+    <>
+      <AddListButton />
+      <ul className="flex flex-col gap-y-3">
+        {lists?.map((list) => (
+          <List key={list.id} list={list} />
+        ))}
+      </ul>
+    </>
   );
 }
 
