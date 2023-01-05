@@ -11,7 +11,6 @@ const handler = async (req, res) => {
     const data = req.query;
     try {
       const lists = await getLists(data);
-      if (error) throw new Error(error);
       return res.status(200).json(lists);
     } catch (error) {
       return res.status(500).json({ error: error.message });
