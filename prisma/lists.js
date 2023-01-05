@@ -11,7 +11,7 @@ const getLists = async (data) => {
         items: true,
       },
     });
-    return { lists: lists };
+    return { lists };
   } catch (error) {
     console.log(error.message);
   }

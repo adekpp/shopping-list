@@ -24,6 +24,7 @@ export default function Home(props) {
     queryKey: ["lists"],
     queryFn: () => getLists(user.email),
     refetchOnWindowFocus: false,
+    enabled: Boolean(user),
   });
   return (
     <ul className="flex flex-col gap-y-3">
