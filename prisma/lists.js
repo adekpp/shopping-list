@@ -1,16 +1,20 @@
 import { prisma } from "@/prisma/client";
 
 const getLists = async (data) => {
-  const lists = await prisma.list.findMany({
-    where: {
-      author: data?.email,
-      id: data?.id,
-    },
-    include: {
-      items: true,
-    },
-  });
-  return lists;
+  try {
+    const lists = await prisma.list.findMany({
+      where: {
+        author: data?.email,
+        id: data?.id,
+      },
+      include: {
+        items: true,
+      },
+    });
+    return { lists };
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 const createList = async (data) => {
