@@ -10,7 +10,7 @@ const handler = async (req, res) => {
   if (req.method === "GET") {
     const data = req.query;
     try {
-      const { lists, error } = await getLists(data);
+      const lists = await getLists(data);
       if (error) throw new Error(error);
       return res.status(200).json(lists);
     } catch (error) {
