@@ -29,11 +29,10 @@ export const ModalListCreate = () => {
 
   const { mutate: create } = useMutation(createList, {
     onSuccess: async (data) => {
-      
+      router.push(`/list/${data.id}`);
       queryClient.invalidateQueries({ queryKey: ["lists"] });
       setList("");
       closeNewListModal();
-      router.push(`/list/${data.id}`)
     },
     onError: (e) => {
       console.log(e);

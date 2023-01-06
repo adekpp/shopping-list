@@ -84,7 +84,7 @@ const ListDetails = () => {
               key={item.id}
               className={`${
                 item.isDone ? "bg-green-600 text-white shadow-none" : "bg-white"
-              } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md`}
+              } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md border-[1px] border-gray-200`}
             >
               <input
                 className="w-[18px] h-[18px] accent-green-600"

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const addItem = async (data) => {
   try {
@@ -18,12 +18,14 @@ const addItem = async (data) => {
 };
 
 const AddItemInput = () => {
+  const inputRef = useRef(null)
   const router = useRouter();
   const queryClient = useQueryClient();
   const { id } = router.query;
   const [item, setItem] = useState("");
   const { mutate: add } = useMutation(addItem, {
     onSuccess: async (data) => {
+      inputRef.current.focus()
       queryClient.invalidateQueries({ queryKey: ["list"] });
     },
     onError: () => {
@@ -34,9 +36,11 @@ const AddItemInput = () => {
   return (
     <>
       <input
+        ref={inputRef}
         className="border-2 border-blue-500 px-2 py-1 outline-none rounded-md"
         type="text"
         value={item}
+        autoFocus
         onChange={(e) => setItem(e.target.value)}
       />
       <button

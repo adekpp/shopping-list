@@ -30,11 +30,17 @@ export default function Home(props) {
   return (
     <>
       <AddListButton />
-      <ul className="flex flex-col gap-y-3">
-        {lists?.map((list) => (
-          <List key={list.id} list={list} />
-        ))}
-      </ul>
+      {lists?.length === 0 ? (
+        <div className="flex w-full place-content-center">
+          <p>Nie posiadasz żadnej listy</p>
+        </div>
+      ) : (
+        <ul className="flex flex-col gap-y-3">
+          {lists?.map((list) => (
+            <List key={list.id} list={list} />
+          ))}
+        </ul>
+      )}
     </>
   );
 }
