@@ -65,11 +65,11 @@ export const ModalListEdit = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all border-[1px] border-grey">
                 <div className="mt-2 z-10 flex flex-col">
                   <input
                     ref={inputRef}
-                    className="bg-green-200 rounded-md py-2 px-2 outline-none"
+                    className="bg-green-200 rounded-md py-2 px-2 outline-1 outline-grey"
                     type="text"
                     defaultValue={data.title}
                     onChange={(e) => setNewTitle(e.target.value)}
@@ -85,7 +85,7 @@ export const ModalListEdit = () => {
                       onClick={async () =>
                         update({ id: data.id, title: newTitle })
                       }
-                      className="bg-blue-500 px-2 py-1 rounded-md text-white w-full font-semibold"
+                      className="bg-yellow px-2 py-1 rounded-md text-white w-full font-semibold"
                     >
                       ZAPISZ
                     </button>

@@ -9,7 +9,7 @@ const DeleteButton = (props) => {
     <button
       onClick={props.onclick}
       onMouseEnter={() =>
-        setIcon(<AiFillDelete className="text-red-500 text-xl" />)
+        setIcon(<AiFillDelete className="text-red text-xl" />)
       }
       onMouseLeave={() => setIcon(initState)}
     >

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Warstwa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 333.68">
+  <defs>
+    <style>
+      .b {
+        fill: #f2d13b;
+      }
+    </style>
+  </defs>
+  <path class="b" d="M400,231.72V0H0V231.72c44.92,61.79,117.76,101.97,200,101.97s155.08-40.18,200-101.97Z"/>
+</svg>

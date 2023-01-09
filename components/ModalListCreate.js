@@ -58,7 +58,7 @@ export const ModalListCreate = () => {
         onClose={closeNewListModal}
         initialFocus={inputRef}
       >
-        <div className="fixed inset-0 bg-blue-500" />
+        <div className="fixed inset-0 bg-yellow" />
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -91,9 +91,9 @@ export const ModalListCreate = () => {
                       onClick={() =>
                         create({ title: list, author: data.user.email })
                       }
-                      className="bg-green-600 px-2 py-1 rounded-md text-white w-full font-semibold active:bg-green-600 active:scale-90 duration-100"
+                      className="bg-yellow px-2 py-1 rounded-md text-white w-full font-semibold active:bg-green-600 active:scale-90 duration-100"
                     >
-                      Stwórz
+                      Utwórz
                     </button>
                   </div>
                 </div>

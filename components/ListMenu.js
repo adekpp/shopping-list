@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useContext} from "react";
+import { Fragment, useContext } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { ModalContext } from "../context/ModalContext";
@@ -36,8 +36,8 @@ export const ListMenu = () => {
       <div className="absolute top-[10px] right-[10px] text-right">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="text-gray-400 active:scale-90">
-              <BsThreeDotsVertical />
+            <Menu.Button className="text-grey active:scale-90  px-2 py-2">
+              <BsThreeDotsVertical className=" text-grey" />
             </Menu.Button>
           </div>
           <Transition
@@ -49,17 +49,16 @@ export const ListMenu = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+            <Menu.Items className="absolute right-0 mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg border-[1px] border-grey focus:outline-none z-10">
               <div className="px-1 py-1 ">
                 <Menu.Item>
                   {({ active }) => (
                     <button
                       onClick={openListEditModal}
-                      className={`${
-                        active ? "bg-blue-600 text-white" : "text-gray-900"
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      className=" text-grey
+                       group flex w-full items-center rounded-md px-2 py-2 text-sm"
                     >
-                      <AiFillEdit className="w-[20px] h-[20px] mr-3 text-gray-400" />
+                      <AiFillEdit className="w-[20px] h-[20px] mr-3" />
                       Zmień nazwę
                     </button>
                   )}
@@ -70,11 +69,10 @@ export const ListMenu = () => {
                   {({ active }) => (
                     <button
                       onClick={() => remove(data.id)}
-                      className={`${
-                        active ? "bg-blue-600 text-white" : "text-gray-900"
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      className=" text-grey
+                       group flex w-full items-center rounded-md px-2 py-2 text-sm"
                     >
-                      <AiFillDelete className="w-[20px] h-[20px] mr-3 text-gray-400" />
+                      <AiFillDelete className="w-[20px] h-[20px] mr-3" />
                       Usuń
                     </button>
                   )}

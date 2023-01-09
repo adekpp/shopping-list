@@ -7,8 +7,10 @@ import { ModalListCreate } from "@/components/ModalListCreate";
 import { ModalListEdit } from "@/components/ModalListEdit";
 
 import { Navbar } from "@/components/Navbar";
+import { RootLayout } from "@/components/RootLayout";
 
 const queryClient = new QueryClient();
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -16,14 +18,16 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <ModalProvider>
-          <Navbar />
-          <Layout>
-            <Component {...pageProps} />
-            <ModalListCreate />
-            <ModalListEdit />
-          </Layout>
-        </ModalProvider>
+        <RootLayout>
+          <ModalProvider>
+            <Navbar />
+            <Layout>
+              <Component {...pageProps} />
+              <ModalListCreate />
+              <ModalListEdit />
+            </Layout>
+          </ModalProvider>
+        </RootLayout>
       </QueryClientProvider>
     </SessionProvider>
   );

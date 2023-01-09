@@ -25,9 +25,9 @@ export const ProgressBar = ({ items }) => {
     }
   };
   return (
-    <div className="w-full h-[10px] bg-gray-300 rounded-full">
+    <div className="w-full h-[10px] bg-light-gray rounded-full">
       <div
-        className="bg-green-600 text-xs font-medium text-center p-0.5 leading-none rounded-full h-[10px]"
+        className="bg-turquse text-xs font-medium text-center p-0.5 leading-none rounded-full h-[10px]"
         style={{ width: statusBarPercent + "%" }}
       ></div>
     </div>
