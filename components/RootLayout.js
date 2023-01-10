@@ -2,7 +2,7 @@ import Image from "next/image"
 import bg from "../public/bg.svg"
 export const RootLayout = ({children}) => {
   return (
-    <div className="max-w-[400px]">
+    <div className="max-w-[400px] text-grey mx-auto">
     <Image
     src={bg}
     alt="background"

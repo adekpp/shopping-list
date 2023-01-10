@@ -23,7 +23,7 @@ const List = ({ list }) => {
 
   return (
     <div>
-      <li className=" relative flex flex-col place-content-between items-center bg-white py-4 px-4 font-semibold w-full rounded-md shadow-lg border-[1px] border-gray-200">
+      <li className=" relative flex flex-col place-content-between items-center bg-white py-4 px-4 font-semibold w-full rounded-md shadow-lg border-[1px] border-grey">
         <div
           onClick={() => {
             handleEdit(list);

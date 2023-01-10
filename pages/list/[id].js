@@ -71,51 +71,52 @@ const ListDetails = () => {
       alert("there was an error");
     },
   });
-  if (status === "loading") {
-    return (
-      <div className="flex w-full place-content-center">
-        <Loader />
-      </div>
-    );
-  }
   return (
     <div>
       <div className="flex flex-row place-content-center items-center gap-x-2">
         <AddItemInput />
       </div>
-      <div>
-        <h1 className="font-semibold text-xl mb-3 mt-3">{list?.title} </h1>
-        <ul className="flex flex-col gap-y-3">
-          {list?.items.length ? (
-            list.items.map((item) => (
-              <li
-                key={item.id}
-                className={`${
-                  item.isDone
-                    ? "bg-yellow text-white shadow-none"
-                    : "bg-white"
-                } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md border-[1px] border-grey`}
-              >
-                <input
-                  className="w-[18px] h-[18px] accent-blue"
-                  type="checkbox"
-                  checked={item.isDone}
-                  value={item.isDone}
-                  onChange={() => {
-                    update({ id: item.id, isDone: !item.isDone });
-                  }}
-                />
-                <p className="w-full"> {item.name}</p>
-                <div className="flex items-center">
-                  <DeleteButton onclick={() => remove(item.id)} />
-                </div>
-              </li>
-            ))
-          ) : (
-            <div className="flex w-full place-content-center"><p>Nie posiadasz nic na liście</p></div>
-          )}
-        </ul>
-      </div>
+      {status === "success" ? (
+        <div>
+          <h1 className="font-semibold text-xl mb-3 mt-3">{list?.title} </h1>
+          <ul className="flex flex-col gap-y-3">
+            {list?.items.length ? (
+              list.items.map((item) => (
+                <li
+                  key={item.id}
+                  className={`${
+                    item.isDone
+                      ? "bg-yellow text-white shadow-none"
+                      : "bg-white"
+                  } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md border-[1px] border-grey`}
+                >
+                  <input
+                    className="w-[20px] h-[20px] accent-blue"
+                    type="checkbox"
+                    checked={item.isDone}
+                    value={item.isDone}
+                    onChange={() => {
+                      update({ id: item.id, isDone: !item.isDone });
+                    }}
+                  />
+                  <p className="w-full"> {item.name}</p>
+                  <div className="flex items-center">
+                    <DeleteButton onclick={() => remove(item.id)} />
+                  </div>
+                </li>
+              ))
+            ) : (
+              <div className="flex w-full place-content-center">
+                <p>Nie posiadasz nic na liście</p>
+              </div>
+            )}
+          </ul>
+        </div>
+      ) : (
+        <div className="flex w-full place-content-center mt-[80px]">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };

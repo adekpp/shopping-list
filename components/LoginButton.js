@@ -7,10 +7,11 @@ export default function LoginButton() {
   const { data: session, status } = useSession();
   if (status === "authenticated") {
     return (
-      <div className="fixed right-[19px] top-[13px] text-right z-10">
+      // fixed right-[19px] top-[13px]
+      <div className=" text-right z-10">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="inline-flex w-full h-full justify-center rounded-md text-sm font-medium text-white ">
+            <Menu.Button className="inline-flex w-full h-full justify-center rounded-md text-sm font-medium text-white active:scale-75">
               <HiMenuAlt3 className="w-7 h-7 text-grey" />
             </Menu.Button>
           </div>

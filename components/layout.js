@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { Loader } from "./Loader";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -14,10 +15,15 @@ export default function Layout({ children }) {
   }
   if (status === "unauthenticated") {
     return (
-      <div className="flex flex-col w-full items-center mt-10">
-      <h1 className="text-grey text-2xl font-semibold">Shopping list</h1>
+      <motion.div
+        initial={{ opacity: "0%", scale: "0%" }}
+        animate={{ opacity: "100%", scale: "100%" }}
+        transition={{ duration: 0.6, repeat: false }}
+        className="flex flex-col w-full items-center mt-14"
+      >
+        <h1 className="text-grey text-2xl font-semibold">Shopping list</h1>
         <p className="text-grey text-xs italic">Nie jesteś zalogowany</p>
-      </div>
+      </motion.div>
     );
   }
   if (status === "authenticated") {
