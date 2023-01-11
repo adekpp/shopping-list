@@ -78,7 +78,7 @@ const ListDetails = () => {
       </div>
       {status === "success" ? (
         <div>
-          <h1 className="font-semibold text-xl mb-3 mt-3">{list?.title} </h1>
+          <h1 className="font-semibold text-2xl mb-3 mt-3">{list?.title} </h1>
           <ul className="flex flex-col gap-y-3">
             {list?.items.length ? (
               list.items.map((item) => (
@@ -106,7 +106,7 @@ const ListDetails = () => {
                 </li>
               ))
             ) : (
-              <div className="flex w-full place-content-center">
+              <div className="flex w-full place-content-center mt-28">
                 <p>Nie posiadasz nic na liście</p>
               </div>
             )}
