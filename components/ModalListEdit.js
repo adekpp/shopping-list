@@ -45,7 +45,12 @@ export const ModalListEdit = () => {
   if (!isEditModalOpen) {
     return null;
   }
-
+  const editList = (list) => {
+    if (list !== "") {
+      const updatedTitle = list.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
+      update({ id: data.id, title: updatedTitle });
+    } else return;
+  };
   return (
     <Transition appear show={isEditModalOpen} as={Fragment}>
       <Dialog
@@ -69,22 +74,23 @@ export const ModalListEdit = () => {
                 <div className="mt-2 z-10 flex flex-col">
                   <input
                     ref={inputRef}
-                    className="bg-green-200 rounded-md py-2 px-2 outline-1 outline-grey"
+                    className="bg-green-200 rounded-md py-2 px-2 border-[1px] border-grey"
                     type="text"
                     defaultValue={data.title}
                     onChange={(e) => setNewTitle(e.target.value)}
                   />
                   <div className="flex flex-row w-full place-content-center gap-x-2 mt-3">
                     <button
-                      onClick={closeListEditModal}
+                      onClick={() => {
+                        closeListEditModal();
+                        setNewTitle("");
+                      }}
                       className="bg-white px-2 py-1 rounded-md w-full active:bg-slate-300 font-semibold"
                     >
                       ZAMKNIJ
                     </button>
                     <button
-                      onClick={async () =>
-                        update({ id: data.id, title: newTitle })
-                      }
+                      onClick={async () => editList(newTitle)}
                       className="bg-yellow px-2 py-1 rounded-md text-white w-full font-semibold"
                     >
                       ZAPISZ

@@ -8,7 +8,7 @@ const AddListButton = () => {
     <div>
       <div className="flex w-full place-content-end mb-4">
         <button
-          className="bg-gradient-to-r from-turquse to-seablue text-white active:scale-90 px-2 py-1  rounded-md disabled:bg-light-gray drop-shadow-md"
+          className="bg-gradient-to-r from-turquse to-seablue text-white active:scale-90 px-3 py-2  rounded-md disabled:bg-gradient-to-r disabled:from-grey disabled:to-light-gray font-semibold drop-shadow-md"
           onClick={openNewListModal}
           disabled={isNewListModalOpen}
         >

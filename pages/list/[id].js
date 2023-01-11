@@ -73,7 +73,7 @@ const ListDetails = () => {
   });
   return (
     <div>
-      <div className="flex flex-row place-content-center items-center gap-x-2">
+      <div className="flex flex-row w-full place-content-between items-center">
         <AddItemInput />
       </div>
       {status === "success" ? (

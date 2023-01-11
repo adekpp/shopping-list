@@ -2,6 +2,8 @@ import { useSession } from "next-auth/react";
 import { Loader } from "./Loader";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import logo from "../public/logo.png"
+import Image from "next/image";
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -21,7 +23,12 @@ export default function Layout({ children }) {
         transition={{ duration: 0.6, repeat: false }}
         className="flex flex-col w-full items-center mt-14"
       >
-        <h1 className="text-grey text-2xl font-semibold">Shopping list</h1>
+        <Image
+        src={logo}
+        alt="Logo"
+        width={250}
+
+         />
         <p className="text-grey text-xs italic">Nie jesteś zalogowany</p>
       </motion.div>
     );

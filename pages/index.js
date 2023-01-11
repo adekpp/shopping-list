@@ -31,7 +31,7 @@ export default function Home(props) {
     <>
       <AddListButton />
       {lists?.length === 0 ? (
-        <div className="flex w-full place-content-center">
+        <div className="flex w-full place-content-center mt-12">
           <p>Nie posiadasz żadnej listy</p>
         </div>
       ) : (

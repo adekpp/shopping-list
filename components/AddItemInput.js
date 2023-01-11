@@ -16,14 +16,13 @@ const addItem = async (data) => {
     console.log(error.message);
   }
 };
-
 const AddItemInput = () => {
   const inputRef = useRef(null);
   const router = useRouter();
   const queryClient = useQueryClient();
   const { id } = router.query;
   const [item, setItem] = useState("");
-  const { mutate: add } = useMutation(addItem, {
+  const { mutate: add, status } = useMutation(addItem, {
     onSuccess: async (data) => {
       inputRef.current.focus();
       queryClient.invalidateQueries({ queryKey: ["list"] });
@@ -37,18 +36,19 @@ const AddItemInput = () => {
     <>
       <input
         ref={inputRef}
-        className="border-[1px] border-grey px-2 py-1 outline-none rounded-md"
+        className="border-[1px] border-grey px-2 py-1 outline-none rounded-md drop-shadow-md w-full mr-2"
         type="text"
         value={item}
         autoFocus
         onChange={(e) => setItem(e.target.value)}
       />
       <button
-        className="bg-gradient-to-r from-turquse to-seablue active:scale-90 px-2 py-1 text-white rounded-md disabled:bg-grey font-semibold"
+        className="bg-gradient-to-r from-turquse to-seablue active:scale-90 px-3 py-2 text-white rounded-md font-semibold drop-shadow-md disabled:bg-gradient-to-r disabled:from-grey disabled:to-light-gray"
         onClick={() => {
           add({ id: id, name: item });
           setItem("");
         }}
+        disabled={status === "loading"}
       >
         Dodaj
       </button>

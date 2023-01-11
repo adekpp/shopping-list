@@ -54,10 +54,10 @@ export default function LoginButton() {
   }
   if (status === "unauthenticated") {
     return (
-      <div className="fixed right-[19px] top-[13px] text-right z-10">
+      <div className="text-right z-10">
         <button
           onClick={() => signIn("google")}
-          className="inline-flex justify-center rounded-md bg-gradient-to-r from-turquse to-seablue text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 py-1 px-2"
+          className="inline-flex justify-center rounded-md bg-gradient-to-r from-turquse to-seablue text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 py-2 px-3"
         >
           Zaloguj się
         </button>
