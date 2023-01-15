@@ -5,53 +5,65 @@ import {
   deleteList,
   updateList,
 } from "@/prisma/lists";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (req, res) => {
-  if (req.method === "GET") {
-    const data = req.query;
-    try {
-      const { lists, error } = await getLists(data);
-      if (error) throw new Error(error);
-      return res.status(200).json(lists);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
-  if (req.method === "POST") {
-    try {
-      const data = req.body;
-      const { list, error } = await createList(data);
-      if (error) throw new Error(error);
-      return res.status(200).json( list );
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (req.method === "DELETE") {
-    try {
+  if (session) {
+    if (req.method === "GET") {
       const data = req.query;
-      const { list, error } = await deleteList(data);
-      if (error) throw new Error(error);
-      return res.status(200).json({ list });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+      try {
+        if (data.email !== session.user.email) throw new Error("Unauthorized");
+        const { lists, error } = await getLists(data);
+        if (error) throw new Error(error);
+        return res.status(200).json(lists);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
     }
-  }
-
-  if (req.method === "PATCH") {
-    try {
+    if (req.method === "POST") {
       const data = req.body;
-      const { list, error } = await updateList(data);
-      if (error) throw new Error(error);
-      return res.status(200).json(list);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+      try {
+        if (data.email !== session.user.email) throw new Error("Unauthorized");
+        const { list, error } = await createList(data);
+        if (error) throw new Error(error);
+        return res.status(200).json(list);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
     }
-  }
 
-  res.setHeader("Allow", ["GET", "POST", "DELETE", "PATCH"]);
-  res.status(425).end(`Method ${req.method} is not allowed.`);
+    if (req.method === "DELETE") {
+      const data = req.query;
+      try {
+        if (data.email !== session.user.email) throw new Error("Unauthorized");
+        const { list, error } = await deleteList(data.id);
+        if (error) throw new Error(error);
+        return res.status(200).json({ list });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    }
+
+    if (req.method === "PATCH") {
+      const data = req.body;
+      try {
+        if (data.email !== session.user.email) throw new Error("Unauthorized");
+        const { list, error } = await updateList(data);
+        if (error) throw new Error(error);
+        return res.status(200).json(list);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    }
+
+    res.setHeader("Allow", ["GET", "POST", "DELETE", "PATCH"]);
+    res.status(425).end(`Method ${req.method} is not allowed.`);
+  } else {
+    res.status(401).end("Unauthorized");
+  }
 };
 
 export default handler;

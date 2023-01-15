@@ -1,10 +1,10 @@
-import Link from "next/link";
-import LoginButton from "@/components/LoginButton";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import BackButton from "./BackButton";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Button from "./ui/Button";
+import UserMenu from "@/components/UserMenu";
+
 export const Navbar = () => {
   const { data: session, status } = useSession();
   return (
@@ -13,8 +13,14 @@ export const Navbar = () => {
         <div className="w-full pl-4 pt-4">
           <BackButton />
         </div>
-        <div className="w-full pr-4 pt-4 z-10">
-          <LoginButton />
+        <div className="flex w-full pr-4 pt-4 z-10 place-content-end">
+          {status === "authenticated" ? (
+            <UserMenu />
+          ) : (
+            <Button intent="primary" onClick={() => signIn("google")}>
+              Zaloguj się
+            </Button>
+          )}
         </div>
       </div>
 

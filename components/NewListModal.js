@@ -1,29 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { Fragment, useContext, useRef, useState } from "react";
 import { ModalContext } from "@/context/ModalContext";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import checkAndTrim from "ultis/checkAndTrim";
-const createList = async (data) => {
-  try {
-    const res = await fetch("/api/lists", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title: data.title, email: data.author }),
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+import TextInput from "./ui/TextInput";
+import Button from "./ui/Button";
+import { createList } from "utils/api";
 
-export const ModalListCreate = () => {
+
+
+export const NewListModal = () => {
   const { data } = useSession();
   const router = useRouter();
-  const inputRef = useRef(null);
+  const ref = useRef(null);
   const queryClient = useQueryClient();
   const { isNewListModalOpen, closeNewListModal } = useContext(ModalContext);
   const [list, setList] = useState("");
@@ -40,17 +30,6 @@ export const ModalListCreate = () => {
     },
   });
 
-  useEffect(() => {
-    if (inputRef && inputRef.current) {
-      const input = inputRef.current;
-      input.focus();
-    }
-  });
-
-  if (!isNewListModalOpen) {
-    return null;
-  }
-
   const createNewList = (list) => {
     if (list !== "") {
       const newList = list.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
@@ -66,7 +45,7 @@ export const ModalListCreate = () => {
         as="div"
         className="relative z-10"
         onClose={closeNewListModal}
-        initialFocus={inputRef}
+        initialFocus={ref}
       >
         <div className="fixed inset-0 bg-yellow" />
         <div className="fixed inset-0 overflow-y-auto">
@@ -82,33 +61,32 @@ export const ModalListCreate = () => {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl   p-6 text-left align-middle transition-all">
                 <div className="mt-2 z-10 flex flex-col">
-                  <input
-                    ref={inputRef}
-                    className="rounded-md py-2 px-2 outline-none"
+                  <TextInput
+                    intent="secondary"
+                    focused="true"
                     type="text"
                     placeholder="Nowa lista"
                     value={list.title}
                     onChange={(e) => setList(e.target.value)}
                   />
                   <div className="flex flex-row w-full place-content-center gap-x-2 mt-3">
-                    <button
+                    <Button
+                      fullWidth
+                      intent="secondary"
                       onClick={() => {
                         closeNewListModal();
                         setList("");
                       }}
-                      className="bg-white px-2 py-1 rounded-md w-full active:bg-slate-300 active:scale-90 font-semibold"
                     >
                       ZAMKNIJ
-                    </button>
-                    <button
-                      onClick={() =>
-                        // create({ title: list, author: data.user.email })
-                        createNewList(list)
-                      }
-                      className="bg-yellow px-2 py-1 rounded-md text-white w-full font-semibold active:bg-green-600 active:scale-90 duration-100"
+                    </Button>
+                    <Button
+                      fullWidth
+                      intent="primary"
+                      onClick={() => createNewList(list)}
                     >
-                      Utwórz
-                    </button>
+                      <span className="drop-shadow-md">DODAJ</span>
+                    </Button>
                   </div>
                 </div>
               </Dialog.Panel>

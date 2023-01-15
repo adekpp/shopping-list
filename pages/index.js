@@ -1,46 +1,34 @@
 import { getSession } from "next-auth/react";
-
+import { useContext } from "react";
+import { ModalContext } from "@/context/ModalContext";
 import { useQuery } from "@tanstack/react-query";
-import List from "@/components/List";
-import AddListButton from "@/components/AddListButton";
+import Button from "@/components/ui/Button";
+import Lists from "@/components/Lists";
+import { getLists } from "utils/api";
 
-const getLists = async (data) => {
-  try {
-    const res = await fetch(`/api/lists?email=${data}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export default function Home(props) {
   const { user } = props;
-
+  const { openNewListModal, isNewListModalOpen } = useContext(ModalContext);
   const { data: lists } = useQuery({
     queryKey: ["lists"],
     queryFn: () => getLists(user.email),
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
     enabled: Boolean(user),
   });
   return (
     <>
-      <AddListButton />
-      {lists?.length === 0 ? (
-        <div className="flex flex-col items-center mt-28">
-          <p>Nie posiadasz żadnej listy</p>
-        </div>
-      ) : (
-        <ul className="flex flex-col gap-y-3">
-          {lists?.map((list) => (
-            <List key={list.id} list={list} />
-          ))}
-        </ul>
-      )}
+      <div className="flex w-full place-content-end mb-4">
+        <Button
+          intent="primary"
+          onClick={openNewListModal}
+          disabled={isNewListModalOpen}
+        >
+          Utwórz listę
+        </Button>
+      </div>
+      <Lists lists={lists} />
     </>
   );
 }

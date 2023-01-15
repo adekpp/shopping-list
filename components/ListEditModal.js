@@ -2,23 +2,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { ModalContext } from "@/context/ModalContext";
+import TextInput from "./ui/TextInput";
+import Button from "./ui/Button";
+import { updateList } from "utils/api";
+import { useSession } from "next-auth/react";
 
-export const updateList = async (data) => {
-  try {
-    const res = await fetch("/api/lists", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const list = await res.json();
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-export const ModalListEdit = () => {
+export const ListEditModal = () => {
+  const { data: session } = useSession();
   const inputRef = useRef(null);
   const queryClient = useQueryClient();
   const { isEditModalOpen, closeListEditModal, data } =
@@ -48,7 +38,7 @@ export const ModalListEdit = () => {
   const editList = (list) => {
     if (list !== "") {
       const updatedTitle = list.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
-      update({ id: data.id, title: updatedTitle });
+      update({ id: data.id, title: updatedTitle, email: session.user.email });
     } else return;
   };
   return (
@@ -72,29 +62,31 @@ export const ModalListEdit = () => {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all border-[1px] border-grey">
                 <div className="mt-2 z-10 flex flex-col">
-                  <input
-                    ref={inputRef}
-                    className="bg-green-200 rounded-md py-2 px-2 border-[1px] border-grey"
+                  <TextInput
+                    focused="true"
                     type="text"
                     defaultValue={data.title}
                     onChange={(e) => setNewTitle(e.target.value)}
+                    className="bg-amber-100 rounded-md py-2 px-1 shadow-md"
                   />
                   <div className="flex flex-row w-full place-content-center gap-x-2 mt-3">
-                    <button
+                    <Button
+                      fullWidth="true"
+                      intent="secondary"
                       onClick={() => {
                         closeListEditModal();
                         setNewTitle("");
                       }}
-                      className="bg-white px-2 py-1 rounded-md w-full active:bg-slate-300 font-semibold"
                     >
                       ZAMKNIJ
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      fullWidth="true"
+                      intent="warning"
                       onClick={async () => editList(newTitle)}
-                      className="bg-yellow px-2 py-1 rounded-md text-white w-full font-semibold"
                     >
                       ZAPISZ
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </Dialog.Panel>

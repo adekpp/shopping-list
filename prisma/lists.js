@@ -4,11 +4,21 @@ const getLists = async (data) => {
   try {
     const lists = await prisma.list.findMany({
       where: {
-        author: data?.email,
+        author: data.email,
         id: data?.id,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
       include: {
         items: true,
+      },
+      include: {
+        items: {
+          orderBy: {
+            isDone: "asc",
+          },
+        },
       },
     });
     return { lists };
@@ -31,10 +41,10 @@ const createList = async (data) => {
   }
 };
 
-const deleteList = async (data) => {
+const deleteList = async (id) => {
   try {
     const deletedList = await prisma.list.delete({
-      where: { id: data.id },
+      where: { id: id },
     });
     return deletedList;
   } catch (error) {

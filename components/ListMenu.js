@@ -4,22 +4,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { ModalContext } from "../context/ModalContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteList } from "utils/api";
 
-const deleteList = async (id) => {
-  try {
-    const res = await fetch(`/api/lists?id=${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return await res.json();
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-export const ListMenu = () => {
+export const ListMenu = ({ user, list }) => {
   const queryClient = useQueryClient();
   const { mutate: remove } = useMutation(deleteList, {
     onSuccess: async (data) => {
@@ -29,8 +16,7 @@ export const ListMenu = () => {
       console.log(e);
     },
   });
-  const { openListEditModal, data } = useContext(ModalContext);
-
+  const { openListEditModal, setList } = useContext(ModalContext);
   return (
     <>
       <div className="absolute top-[10px] right-[10px] text-right">
@@ -50,7 +36,7 @@ export const ListMenu = () => {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="absolute right-0 mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg border-[1px] border-grey focus:outline-none z-10">
-              <div className="px-1 py-1 ">
+              <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <button
@@ -68,7 +54,10 @@ export const ListMenu = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => remove(data.id)}
+                      onClick={() => {
+                        remove({ id: list.id, email: user.email })
+                        setList({})
+                        }}
                       className=" text-grey
                        group flex w-full items-center rounded-md px-2 py-2 text-sm"
                     >

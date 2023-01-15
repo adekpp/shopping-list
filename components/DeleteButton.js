@@ -3,11 +3,11 @@ import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
 
 const initState = <AiOutlineDelete className="text-red text-xl" />;
 
-const DeleteButton = (props) => {
+const DeleteButton = ({ ...props }) => {
   const [icon, setIcon] = useState(initState);
   return (
     <button
-      onClick={props.onclick}
+      {...props}
       onMouseEnter={() =>
         setIcon(<AiFillDelete className="text-red text-xl" />)
       }

@@ -5,7 +5,8 @@
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/prisma/*": ["prisma/*"],
-      "@/context/*": ["context/*"]
+      "@/context/*": ["context/*"],
+      "@/components/ui/*": ["components/ui/*"]
     }
   }
 }

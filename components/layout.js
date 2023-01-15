@@ -1,12 +1,11 @@
 import { useSession } from "next-auth/react";
-import { Loader } from "./Loader";
-import { useRouter } from "next/router";
+import { Loader } from "./ui/Loader";
 import { motion } from "framer-motion";
 import logo from "../public/logo.png"
 import Image from "next/image";
 export default function Layout({ children }) {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const { status } = useSession();
+
 
   if (status === "loading") {
     return (
@@ -21,7 +20,7 @@ export default function Layout({ children }) {
         initial={{ opacity: "0%", scale: "0%" }}
         animate={{ opacity: "100%", scale: "100%" }}
         transition={{ duration: 0.6, repeat: false }}
-        className="flex flex-col w-full items-center mt-14"
+        className="flex flex-col w-full items-center mt-10 "
       >
         <Image
         src={logo}

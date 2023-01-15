@@ -1,10 +1,10 @@
 import "../styles/globals.css";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import { getSession, SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ModalProvider } from "@/context/ModalContext";
-import { ModalListCreate } from "@/components/ModalListCreate";
-import { ModalListEdit } from "@/components/ModalListEdit";
+import { NewListModal } from "@/components/NewListModal";
+import { ListEditModal } from "@/components/ListEditModal";
 
 import { Navbar } from "@/components/Navbar";
 import { RootLayout } from "@/components/RootLayout";
@@ -23,8 +23,8 @@ export default function App({
             <Navbar />
             <Layout>
               <Component {...pageProps} />
-              <ModalListCreate />
-              <ModalListEdit />
+              <NewListModal />
+              <ListEditModal />
             </Layout>
           </ModalProvider>
         </RootLayout>

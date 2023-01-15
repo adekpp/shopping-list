@@ -26,9 +26,9 @@ model List {
 }
 
 model Item {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  isDone Boolean @default(false)
-  name   String
-  List   List?   @relation(fields: [listId], references: [id], onDelete: Cascade)
-  listId String? @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  isDone    Boolean  @default(false)
+  name      String
+  List      List?    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId    String?  @db.ObjectId
 }
