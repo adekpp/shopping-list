@@ -8,26 +8,25 @@ import { ListEditModal } from "@/components/ListEditModal";
 
 import { Navbar } from "@/components/Navbar";
 import { RootLayout } from "@/components/RootLayout";
-
-const queryClient = new QueryClient();
-
+import { useState } from "react";
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [queryClient, setQueryClient] = useState(new QueryClient());
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <RootLayout>
+  
           <ModalProvider>
-            <Navbar />
+            {/* <Navbar /> */}
             <Layout>
               <Component {...pageProps} />
               <NewListModal />
               <ListEditModal />
             </Layout>
           </ModalProvider>
-        </RootLayout>
+    
       </QueryClientProvider>
     </SessionProvider>
   );

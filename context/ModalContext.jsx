@@ -5,13 +5,13 @@ export const ModalContext = createContext();
 export const ModalProvider = ({ children }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewListModalOpen, setIsNewListModalOpen] = useState(false);
-  const [data, setData] = useState({});
+  const [editingList, setEditingList] = useState({});
 
   const openListEditModal = () => setIsEditModalOpen(true);
   const closeListEditModal = () => setIsEditModalOpen(false);
   const openNewListModal = () => setIsNewListModalOpen(true);
   const closeNewListModal = () => setIsNewListModalOpen(false);
-  const setList = (list) => setData(list);
+  const editList = (list) => setEditingList(list);
 
   return (
     <ModalContext.Provider
@@ -22,8 +22,8 @@ export const ModalProvider = ({ children }) => {
         closeListEditModal,
         openNewListModal,
         closeNewListModal,
-        data,
-        setList,
+        editingList,
+        editList,
       }}
     >
       {children}

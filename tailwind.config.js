@@ -18,6 +18,7 @@ module.exports = {
         red: "#FF1654",
         turquse: "#00deb6",
         seablue: "#009ccd",
+        fbBlue: "#1877F2"
       },
     },
   },

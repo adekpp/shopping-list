@@ -1,22 +1,17 @@
 import { getSession } from "next-auth/react";
 import { useContext } from "react";
 import { ModalContext } from "@/context/ModalContext";
-import { useQuery } from "@tanstack/react-query";
 import Button from "@/components/ui/Button";
 import Lists from "@/components/Lists";
-import { getLists } from "utils/api";
-
+import useLists from "hooks/useLists";
+import { Loader } from "@/components/ui/Loader";
 
 export default function Home(props) {
   const { user } = props;
   const { openNewListModal, isNewListModalOpen } = useContext(ModalContext);
-  const { data: lists } = useQuery({
-    queryKey: ["lists"],
-    queryFn: () => getLists(user.email),
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-    enabled: Boolean(user),
-  });
+
+  const { lists, status } = useLists(user);
+
   return (
     <>
       <div className="flex w-full place-content-end mb-4">
@@ -28,7 +23,12 @@ export default function Home(props) {
           Utwórz listę
         </Button>
       </div>
-      <Lists lists={lists} />
+      {status === "loading" && (
+        <div className="flex w-full place-content-center mt-40">
+          <Loader />
+        </div>
+      )}
+      {status === "success" && <Lists lists={lists} />}
     </>
   );
 }

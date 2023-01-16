@@ -1,13 +1,14 @@
 import { cva } from "class-variance-authority";
 
 const buttonStyles = cva(
-  "text-white active:scale-90 px-3 py-2 rounded-md drop-shadow-md font-semibold",
+  "text-white active:scale-90 px-3 py-2 rounded-md drop-shadow-md font-semibold transition-all duration-75",
   {
     variants: {
       intent: {
         primary: "bg-gradient-to-r from-turquse to-seablue",
         secondary: "bg-white text-grey",
         warning: "bg-yellow text-white",
+        fb: "bg-fbBlue text-white",
       },
       fullWidth: {
         true: "w-full",

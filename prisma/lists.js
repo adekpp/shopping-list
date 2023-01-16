@@ -68,27 +68,5 @@ const updateList = async (data) => {
   }
 };
 
-const getSingleList = async (req, res) => {
-  const listId = req.query;
-  try {
-    const list = await prisma.list.findUnique({
-      where: {
-        id: listId.id,
-      },
-      include: {
-        items: {
-          orderBy: [
-            {
-              isDone: "asc",
-            },
-          ],
-        },
-      },
-    });
-    return res.status(200).json({ list });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
 
-export { getLists, getSingleList, createList, deleteList, updateList };
+export { getLists, createList, deleteList, updateList };

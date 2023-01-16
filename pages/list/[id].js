@@ -1,50 +1,21 @@
 import AddItemInput from "@/components/AddItemInput";
 import DeleteButton from "@/components/DeleteButton";
 import { Loader } from "@/components/ui/Loader";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { deleteItem, getList, updateItem } from "utils/api";
 import { AnimatePresence, motion } from "framer-motion";
+import useList from "hooks/useList";
+import useDeleteItem from "hooks/useDeleteItem";
+import useUpdateItem from "hooks/useUpdateItem";
 const ListDetails = (props) => {
   const { user } = props;
-  const queryClient = useQueryClient();
+
   const router = useRouter();
-  const [list, setList] = useState(null);
   const [deletingItem, setDeletingItem] = useState(null);
-
-  const { data, status } = useQuery(
-    ["list"],
-    () => getList({ id: router.query.id, email: user.email }),
-    {
-      onSuccess: async (data) => {
-        setList(data[0]);
-      },
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: 0,
-      enabled: Boolean(router.isReady),
-    }
-  );
-
-  const { mutate: remove } = useMutation(deleteItem, {
-    onSuccess: async (data) => {
-      queryClient.invalidateQueries({ queryKey: ["list"] });
-    },
-    onError: () => {
-      alert("there was an error");
-    },
-  });
-
-  const { mutate: update } = useMutation(updateItem, {
-    onSuccess: async (data) => {
-      queryClient.invalidateQueries({ queryKey: ["list"] });
-    },
-    onError: () => {
-      alert("there was an error");
-    },
-  });
+  const { list, status } = useList({ id: router.query.id, email: user.email });
+  const { remove } = useDeleteItem();
+  const { update } = useUpdateItem();
 
   const removeItem = (item) => {
     setDeletingItem(item.id);

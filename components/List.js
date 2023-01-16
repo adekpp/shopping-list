@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { ProgressBar } from "./ProgressBar";
 import { ListMenu } from "./ListMenu";
-import { useContext } from "react";
-import { ModalContext } from "../context/ModalContext";
 import { useSession } from "next-auth/react";
 
 const List = ({ list }) => {
-  const { setList } = useContext(ModalContext);
   const { data: session } = useSession();
 
   const itemsDone = () => {
@@ -19,10 +16,6 @@ const List = ({ list }) => {
     return itemsDone.length;
   };
 
-  const handleEdit = (list) => {
-    setList(list);
-  };
-
   return (
     <li
       className=" relative flex flex-col place-content-between items-center
@@ -30,11 +23,7 @@ const List = ({ list }) => {
       border-grey"
     >
       <ListMenu user={session.user} list={list} />
-      <div
-        onClick={() => {
-          handleEdit(list);
-        }}
-      ></div>
+
       <Link href={`/list/${list?.id}`} className="w-full">
         <div className="flex flex-row place-content-between w-full">
           <p>{list?.title}</p>

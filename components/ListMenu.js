@@ -5,18 +5,11 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { ModalContext } from "../context/ModalContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteList } from "utils/api";
+import useDeleteList from "hooks/useDeleteList";
 
 export const ListMenu = ({ user, list }) => {
-  const queryClient = useQueryClient();
-  const { mutate: remove } = useMutation(deleteList, {
-    onSuccess: async (data) => {
-      queryClient.invalidateQueries({ queryKey: ["lists"] });
-    },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
-  const { openListEditModal, setList } = useContext(ModalContext);
+  const { remove } = useDeleteList();
+  const { openListEditModal, editList } = useContext(ModalContext);
   return (
     <>
       <div className="absolute top-[10px] right-[10px] text-right">
@@ -40,7 +33,10 @@ export const ListMenu = ({ user, list }) => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={openListEditModal}
+                      onClick={() => {
+                        editList(list);
+                        openListEditModal();
+                      }}
                       className=" text-grey
                        group flex w-full items-center rounded-md px-2 py-2 text-sm"
                     >
@@ -55,9 +51,8 @@ export const ListMenu = ({ user, list }) => {
                   {({ active }) => (
                     <button
                       onClick={() => {
-                        remove({ id: list.id, email: user.email })
-                        setList({})
-                        }}
+                        remove({ id: list.id, email: user.email });
+                      }}
                       className=" text-grey
                        group flex w-full items-center rounded-md px-2 py-2 text-sm"
                     >

@@ -6,41 +6,47 @@ import TextInput from "./ui/TextInput";
 import Button from "./ui/Button";
 import { updateList } from "utils/api";
 import { useSession } from "next-auth/react";
+import useChangeTitle from "hooks/useChangeTitle";
 
 export const ListEditModal = () => {
   const { data: session } = useSession();
   const inputRef = useRef(null);
-  const queryClient = useQueryClient();
-  const { isEditModalOpen, closeListEditModal, data } =
+  const { isEditModalOpen, closeListEditModal, editingList } =
     useContext(ModalContext);
   const [newTitle, setNewTitle] = useState("");
-
-  const { mutate: update } = useMutation(updateList, {
-    onSuccess: async (data) => {
-      queryClient.invalidateQueries({ queryKey: ["lists"] });
-      closeListEditModal();
-    },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
+  const { status, update } = useChangeTitle();
+  // const { mutate: update } = useMutation(updateList, {
+  //   onSuccess: async (data) => {
+  //     queryClient.invalidateQueries({ queryKey: ["lists"] });
+  //     closeListEditModal();
+  //   },
+  //   onError: (e) => {
+  //     console.log(e);
+  //   },
+  // });
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
       const input = inputRef.current;
       input.focus();
     }
-  });
+    if (status === "success") closeListEditModal();
+  }, [status]);
 
   if (!isEditModalOpen) {
     return null;
   }
-  const editList = (list) => {
+  const changeListTitle = async (list) => {
     if (list !== "") {
       const updatedTitle = list.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
-      update({ id: data.id, title: updatedTitle, email: session.user.email });
+      update({
+        id: editingList.id,
+        title: updatedTitle,
+        email: session.user.email,
+      });
     } else return;
   };
+  
   return (
     <Transition appear show={isEditModalOpen} as={Fragment}>
       <Dialog
@@ -65,7 +71,7 @@ export const ListEditModal = () => {
                   <TextInput
                     focused="true"
                     type="text"
-                    defaultValue={data.title}
+                    defaultValue={editingList.title}
                     onChange={(e) => setNewTitle(e.target.value)}
                     className="bg-amber-100 rounded-md py-2 px-1 shadow-md"
                   />
@@ -83,7 +89,7 @@ export const ListEditModal = () => {
                     <Button
                       fullWidth="true"
                       intent="warning"
-                      onClick={async () => editList(newTitle)}
+                      onClick={async () => changeListTitle(newTitle)}
                     >
                       ZAPISZ
                     </Button>
