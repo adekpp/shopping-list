@@ -17,16 +17,16 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-  
-          <ModalProvider>
-            {/* <Navbar /> */}
+        <ModalProvider>
+          <RootLayout>
+            <Navbar />
             <Layout>
               <Component {...pageProps} />
               <NewListModal />
               <ListEditModal />
             </Layout>
-          </ModalProvider>
-    
+          </RootLayout>
+        </ModalProvider>
       </QueryClientProvider>
     </SessionProvider>
   );

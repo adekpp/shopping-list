@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-export const authOptions = { 
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -9,8 +9,8 @@ export const authOptions = {
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
-    })
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    }),
   ],
   callbacks: {
     async session({ session, token, user }) {
