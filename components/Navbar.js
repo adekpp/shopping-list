@@ -15,12 +15,6 @@ export const Navbar = () => {
         </div>
         <div className="flex w-full pr-4 pt-4 z-10 place-content-end">
           {status === "authenticated" && <UserMenu />}
-
-          {status === "unauthenticated" && (
-            <Button intent="primary" onClick={() => signIn("google")}>
-              Zaloguj się
-            </Button>
-          )}
         </div>
       </div>
 
