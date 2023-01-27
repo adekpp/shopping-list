@@ -9,6 +9,7 @@ const buttonStyles = cva(
         secondary: "bg-white text-grey",
         warning: "bg-yellow text-white",
         fb: "bg-fbBlue text-white",
+        disabled: "bg-gray-400"
       },
       fullWidth: {
         true: "w-full",

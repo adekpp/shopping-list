@@ -2,7 +2,6 @@ import { signIn, useSession } from "next-auth/react";
 import BackButton from "./BackButton";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Button from "./ui/Button";
 import UserMenu from "@/components/UserMenu";
 
 export const Navbar = () => {
@@ -11,7 +10,7 @@ export const Navbar = () => {
     <>
       <div className="flex w-full flex-row">
         <div className="w-full pl-4 pt-4">
-          <BackButton />
+          <BackButton session={session}/>
         </div>
         <div className="flex w-full pr-4 pt-4 z-10 place-content-end">
           {status === "authenticated" && <UserMenu />}

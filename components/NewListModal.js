@@ -8,8 +8,6 @@ import TextInput from "./ui/TextInput";
 import Button from "./ui/Button";
 import { createList } from "utils/api";
 
-
-
 export const NewListModal = () => {
   const { data } = useSession();
   const router = useRouter();
@@ -18,7 +16,7 @@ export const NewListModal = () => {
   const { isNewListModalOpen, closeNewListModal } = useContext(ModalContext);
   const [list, setList] = useState("");
 
-  const { mutate: create } = useMutation(createList, {
+  const { mutate: create, status } = useMutation(createList, {
     onSuccess: async (data) => {
       router.push(`/list/${data.id}`);
       queryClient.invalidateQueries({ queryKey: ["lists"] });
@@ -29,7 +27,6 @@ export const NewListModal = () => {
       console.log(e);
     },
   });
-
   const createNewList = (list) => {
     if (list !== "") {
       const newList = list.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
@@ -49,7 +46,7 @@ export const NewListModal = () => {
       >
         <div className="fixed inset-0 bg-yellow" />
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full mt-10 justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -82,7 +79,8 @@ export const NewListModal = () => {
                     </Button>
                     <Button
                       fullWidth
-                      intent="primary"
+                      intent={status === "loading" ? "disabled" : "primary"}
+                      disabled={status === "loading"}
                       onClick={() => createNewList(list)}
                     >
                       <span className="drop-shadow-md">DODAJ</span>
