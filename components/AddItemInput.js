@@ -22,7 +22,7 @@ const AddItemInput = () => {
     },
     enabled: router.isReady,
   });
-
+  console.log(status);
   const addNewItem = (item) => {
     if (item.name !== "") {
       const newItem = item.name.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
@@ -38,7 +38,7 @@ const AddItemInput = () => {
         onChange={(e) => setItem(e.target.value)}
       />
       <Button
-        intent="primary"
+        intent={status === "loading" ? "disabled" : "primary"}
         onClick={() => {
           addNewItem({ name: item });
           setItem("");

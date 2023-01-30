@@ -51,7 +51,7 @@ const ListDetails = (props) => {
                       item.isDone
                         ? "bg-yellow text-white shadow-none"
                         : "bg-white"
-                    } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md border-[1px] border-grey`}
+                    } px-2 flex flex-row gap-x-2 place-items-center py-2 shadow-md rounded-md border-[1px] border-grey transition-colors`}
                   >
                     <input
                       className="w-[20px] h-[20px] accent-blue"

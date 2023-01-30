@@ -12,7 +12,7 @@ export const Navbar = () => {
         <div className="w-full pl-4 pt-4">
           <BackButton session={session}/>
         </div>
-        <div className="flex w-full pr-4 pt-4 z-10 place-content-end">
+        <div className="flex w-full pr-4 pt-4 z-10 place-content-end ">
           {status === "authenticated" && <UserMenu />}
         </div>
       </div>

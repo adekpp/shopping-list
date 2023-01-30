@@ -15,7 +15,7 @@ export const ListMenu = ({ user, list }) => {
       <div className="absolute top-[10px] right-[10px] text-right">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="text-grey active:scale-90  px-2 py-2">
+            <Menu.Button className="text-grey active:scale-90  px-2 py-2  border-[1px] border-grey rounded-full p-1  border-opacity-0 active:border-opacity-25 active:border-grey">
               <BsThreeDotsVertical className=" text-grey" />
             </Menu.Button>
           </div>

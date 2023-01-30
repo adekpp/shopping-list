@@ -5,10 +5,10 @@ import { HiMenuAlt3 } from "react-icons/hi";
 export default function UserMenu() {
   const { data: session, status } = useSession();
   return (
-    <div className=" text-right z-10">
-      <Menu as="div" className="relative inline-block text-left">
+    <div className=" text-right z-10 ">
+      <Menu as="div" className="relative inline-block text-left ">
         <div>
-          <Menu.Button className="inline-flex w-full h-full justify-center rounded-md text-sm font-medium text-white active:scale-75">
+          <Menu.Button className="inline-flex w-full h-full justify-center  text-sm font-medium text-white active:scale-75  border-[1px] border-grey rounded-full p-2  border-opacity-0 active:border-opacity-25 active:border-grey">
             <HiMenuAlt3 className="w-7 h-7 text-grey" />
           </Menu.Button>
         </div>
